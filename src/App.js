@@ -1,17 +1,22 @@
-import React from 'react';
 import Notes from './components/notes';
-import NavBar from './components/navbar'; // Import the NavBar component
-import './App.css';
+import { NavBar } from './components/navbar';
+import { Banner } from './components/banner';
+import Test from './components/test';
+import Resources from './components/resources';
+import './style.css';
+
 
 function App() {
   return (
-    <div className="App">
-      <main className="App-main">
-        <Notes /> {/* Render the Notes component */}
-        <NavBar /> {/* Render the NavBar component */}
-        {/* Render other components here as needed */}
-      </main>
-    </div>
+      <div className="App">
+        <NavBar /> {/* NavBar is now within Router context */}
+        <main className="App-main">
+          <Banner />
+          <Notes /> {/* Render the Notes component */}
+          <Test /> {/* Render the test component */}
+          <Resources />
+        </main>
+      </div>
   );
 }
 
