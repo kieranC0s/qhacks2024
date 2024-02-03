@@ -21,6 +21,8 @@ body, html {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds subtle shadow for depth */
 }
 
+
+
 /* Logo or brand styling */
 .navbar .logo {
   margin-right: auto; /* Pushes all other nav items to the right */

@@ -28,7 +28,7 @@ export const NavBar = () => {
   };
 
   return (
-      <Navbar expand="md" className={scrolled ? "scrolled" : ""}>
+      <Navbar expand="md" className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
         <Container>
           <Navbar.Brand as={HashLink} to="#home">
             {/* If you have a logo, you can uncomment and use the next line */}
