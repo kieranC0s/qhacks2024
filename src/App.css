@@ -6,6 +6,7 @@
   padding: 20px;
 }
 
+
 .App-header {
   background-color: #282c34;
   padding: 20px 0;
@@ -30,6 +31,10 @@
 .note-options {
   width: 25%;
   text-align: left;
+}
+
+.hide{
+  display: none;
 }
 
 textarea, input[type="file"] {
