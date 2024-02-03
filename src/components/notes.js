@@ -3,7 +3,7 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/legacy/build/pdf.worker";
 import "./App.css";
 
-function notes() {
+function App() {
   const [notes, setNotes] = useState("");
   const [summary, setSummary] = useState("");
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
@@ -15,6 +15,7 @@ function notes() {
   const [def, setDef] = useState(3);
   const [calc, setCalc] = useState(1);
 
+  
   const handleNumberChange = (operation, val) => {
 	//choose which valyue to chafne based on val, maxumim 10 questions minimum 0 question
 	if(val === "mcq"){
@@ -59,16 +60,20 @@ function notes() {
 	}
   }
 
-  //if a reset button is cicked the values of the questions will be reset to 0
   const handleReset = () => {
 	setMcq(0);
 	setLaq(0);
 	setSaq(0);
 	setDef(0);
 	setCalc(0);
-	  }
+	 }
 
-
+   const handlePrint = () => {
+    const printWindow = window.open('', '_blank');
+    const printContents = document.querySelector('.note-summary').innerHTML;
+    printWindow.document.body.innerHTML = printContents;
+    printWindow.print();
+  };
 
   const handleNotesChange = (event) => {
     setNotes(event.target.value);
@@ -100,7 +105,7 @@ function notes() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
@@ -304,15 +309,19 @@ function notes() {
 		  <button style={{maxWidth:"100px",margin:"0 auto", display: "block", backgroundColor: "#808080"}} onClick={handleReset}>Reset</button>
 		  <button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? "Transforming..." : "Start Transforming"}
-          </button>
+      </button>
+
+      <button onClick={handlePrint} disabled={!summary||isSubmitting} className="print-button">
+            Print Summary
+      </button>
 		  </p>
         </section>
                 
         <aside className="note-options">
-                    {/* Your existing code for note options */}
-                  
+                    {/* Your existing code for note options */}          
         </aside>
                 
+
         <section className="note-summary">
                     <h3>Summary</h3>
                     
@@ -326,4 +335,4 @@ function notes() {
   );
 }
 
-export default notes;
+export default App;
