@@ -7,7 +7,8 @@ function App() {
   const [notes, setNotes] = useState('');
   const [summary, setSummary] = useState('');
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
-const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
+  const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
+  const [quantity, setQuantity] = useState(5);
 
   const handleNotesChange = (event) => {
     setNotes(event.target.value);
@@ -39,7 +40,7 @@ const [isSubmitting, setIsSubmitting] = useState(false); // State to track wheth
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -100,9 +101,6 @@ const [isSubmitting, setIsSubmitting] = useState(false); // State to track wheth
       const intervalId = setInterval(() => {
         if(i<summaryArray.length-1){
           setDisplayedSummary(prev => prev + summaryArray[i]);
-          console.log('submitting', isSubmitting);
-          console.log('i', i);
-          console.log('summaryArray.length', summaryArray.length);
           i++;
       }else{ 
           clearInterval(intervalId);
@@ -123,9 +121,11 @@ const [isSubmitting, setIsSubmitting] = useState(false); // State to track wheth
       setDisplayedSummary('');
       updateDisplayedSummary();
     }
-    console.log('submitting', isSubmitting);
   }, [summary]);
 
+const handleNumberChange = (value) => {
+
+}
 
 
   return (
@@ -152,6 +152,24 @@ const [isSubmitting, setIsSubmitting] = useState(false); // State to track wheth
           <button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Transforming...' : 'Start Transforming'}
           </button>
+            <h2>Test Formatting</h2>
+                <p align="left">Multiple Choice</p>
+                <div className="number">
+					<style>
+						input[type=number]::-webkit-inner-spin-button,
+						input[type=number]::-webkit-outer-spin-button -webkit-appearance: none;
+					</style>
+			<button onClick={() => handleNumberChange(-1)}>-</button>
+          	<input
+            className="quantity"
+            min="0"
+            name="quantity"
+            value={quantity}
+            type="number"
+            onChange={(e) => handleNumberChange(e.target.value)}
+          />
+          <button onClick={() => handleNumberChange(1)}>+</button>
+        </div>
         </section>
         <aside className="note-options">
           {/* Your existing code for note options */}
@@ -164,6 +182,5 @@ const [isSubmitting, setIsSubmitting] = useState(false); // State to track wheth
     </div>
   );
 }
-
 
 export default App;
