@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../App.css';
@@ -88,6 +88,39 @@ function Notes() {
     setIsSubmitting(false);
   };
 
+  const [displayedSummary, setDisplayedSummary] = useState('');
+
+  useEffect(() => {
+    //Function to update the displayed summary letter by letter
+    console.log(summary);
+    const updateDisplayedSummary = () => {
+      const summaryArray = summary.split('');
+      let i = 0;
+
+      setDisplayedSummary(summaryArray[0]);
+
+      console.log(summaryArray);
+      
+
+      const intervalId = setInterval(() => {
+        if(i<summaryArray.length-1 ){
+          setDisplayedSummary(prev => prev + summaryArray[i]);
+          i++;
+      }else{ 
+          clearInterval(intervalId);
+        }
+      }, 30); // Adjust the interval duration as needed
+    };
+
+    // Whenever the 'summary' state changes, update the displayed summary
+    if (summary) {
+      setDisplayedSummary('');
+      updateDisplayedSummary();
+    }
+  }, [summary]);
+
+
+
   return (
     <div className="App">
       <header className="App-header">
@@ -118,7 +151,7 @@ function Notes() {
         </aside>
         <section className="note-summary">
           <h3>Summary</h3>
-          <p>{summary || 'Your summary will appear here.'}</p>
+          <p>{displayedSummary || 'Your summary will appear here.'}</p>
         </section>
       </main>
     </div>
