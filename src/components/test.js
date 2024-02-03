@@ -3,7 +3,7 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../style.css';
 
-function Notes() {
+function Test() {
   const [notes, setNotes] = useState('');
   const [summary, setSummary] = useState('');
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
@@ -132,13 +132,9 @@ const handleNumberChange = (value) => {
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>iLearn</h1>
-        <p>Enhanced by AI</p>
-      </header>
       <main className="App-main">
         <section className="note-upload">
-          <h2>Generate instant study materials</h2>
+          <h2>Generate instant Mock up tests based off of your materials</h2>
           <textarea
             placeholder="Put your notes here. We'll do the rest."
             value={notes}
@@ -177,12 +173,12 @@ const handleNumberChange = (value) => {
           {/* Your existing code for note options */}
         </aside>
         <section className="note-summary">
-          <h3>Summary</h3>
-          <p>{displayedSummary || 'Your summary will appear here.'}</p>
+          <h3>Mock Test Questions</h3>
+          <p>{displayedSummary || 'Your Questions will appear here.'}</p>
         </section>
       </main>
     </div>
   );
 }
 
-export default Notes;
+export default Test;

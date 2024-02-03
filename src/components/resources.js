@@ -3,7 +3,7 @@ import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../style.css';
 
-function Notes() {
+function Resources() {
   const [notes, setNotes] = useState('');
   const [summary, setSummary] = useState('');
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
@@ -185,4 +185,4 @@ const handleNumberChange = (value) => {
   );
 }
 
-export default Notes;
+export default Resources;
