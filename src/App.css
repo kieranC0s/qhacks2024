@@ -1,0 +1,37 @@
+/* App.css - This is the CSS file for basic styling */
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.App-main {
+  display: flex;
+  justify-content: space-around;
+}
+
+.note-upload {
+  width: 50%;
+}
+
+.note-options {
+  width: 25%;
+  text-align: left;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+}
+
+button {
+  margin-top: 10px;
+}
