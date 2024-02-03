@@ -3,7 +3,7 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/legacy/build/pdf.worker";
 import "./App.css";
 
-function App() {
+function notes() {
   const [notes, setNotes] = useState("");
   const [summary, setSummary] = useState("");
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
@@ -163,7 +163,7 @@ function App() {
           setIsSubmitting(false);
           console.log("submitting", isSubmitting);
         }
-      }, 30); // Adjust the interval duration as needed'
+      }, 20); // Adjust the interval duration as needed'
     }; // Whenever the 'summary' state changes, update the displayed summary
 
     if (summary) {
@@ -326,4 +326,4 @@ function App() {
   );
 }
 
-export default App;
+export default notes;
