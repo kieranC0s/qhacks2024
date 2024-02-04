@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { ArrowRightCircle } from 'react-bootstrap-icons';
+import mascot from "../assets/mascot.jpg";
 import 'animate.css';
 import TrackVisibility from 'react-on-screen';
 import '../style.css';
@@ -10,7 +11,7 @@ export const Banner = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const toRotate = ["Computer Engineer"]; // Add more items to rotate if needed
+  const toRotate = ["Welcome to iLearn!"]; // Add more items to rotate if needed
   const period = 2000;
 
   useEffect(() => {
@@ -65,20 +66,28 @@ export const Banner = () => {
   return (
     <section className="banner" id="home">
       <Container>
-        <Row className="align-items-center">
-          <Col xs={12} md={12}>
+        <Row className="aligh-items-center">
+          <Col xs={12} md={6} xl={7}>
+          <TrackVisibility>
+            {({ isVisible }) =>
+              <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+                <div className="text-background"> {/* Add this line */}
+                  <h1>{} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Welcome to iLearn" ]'><span className="wrap">{text}</span></span></h1>
+                  <p>Dive into a comprehensive suite of tools designed to enrich your learning journey. From insightful summaries to bespoke test creation and a wealth of resources, every path leads to new discoveries. Choose your next step:</p>
+                </div> {/* Close the div here */}
+                </div>}
+          </TrackVisibility>
+          </Col>
+          <Col xs={12} md={6} xl={5}>
             <TrackVisibility>
               {({ isVisible }) =>
-                <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
-                  <span className="tagline">Welcome to iLearn</span>
-                  <h1>{`Your AI-enhanced learning platform`}</h1>
-                  <p>Here at iLearn, we provide you with cutting-edge tools to enhance your studying. From summarizing notes to preparing for exams with mock tests, we make sure you have the best support for your learning journey.</p>
-                  <button onClick={() => console.log('connect')}>Explore Now <ArrowRightCircle size={25} /></button>
+                <div className={isVisible ? "animate__animated animate__rubberBand" : ""}> 
+                  <img src={mascot} alt="Mascot Img" style={{ width: '700px', height: 'auto', marginRight: '40px' }}/>
                 </div>}
             </TrackVisibility>
           </Col>
         </Row>
       </Container>
     </section>
-  );
-};
+  )
+}

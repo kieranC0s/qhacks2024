@@ -42,7 +42,7 @@ function Notes() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -130,59 +130,44 @@ const handleNumberChange = (value) => {
 }
 
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h1>iLearn</h1>
-        <p>Enhanced by AI</p>
-      </header>
-      <main className="App-main">
-        <section className="note-upload">
-          <h2>Generate instant study materials</h2>
-          <textarea
-            placeholder="Put your notes here. We'll do the rest."
-            value={notes}
-            onChange={handleNotesChange}
-            disabled={isSubmitting}
-          />
-          <input
-            type="file"
-            onChange={handlePdfChange}
-            accept=".pdf"
-            disabled={isSubmitting}
-          />
-          <button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? 'Transforming...' : 'Start Transforming'}
-          </button>
-            <h2>Test Formatting</h2>
-                <p align="left">Multiple Choice</p>
-                <div className="number">
-					<style>
-						input[type=number]::-webkit-inner-spin-button,
-						input[type=number]::-webkit-outer-spin-button -webkit-appearance: none;
-					</style>
-			<button onClick={() => handleNumberChange(-1)}>-</button>
-          	<input
-            className="quantity"
-            min="0"
-            name="quantity"
-            value={quantity}
-            type="number"
-            onChange={(e) => handleNumberChange(e.target.value)}
+return (
+    <div className="App">
+        
+      <header className="App-header">
+        <h1>Notes Summary</h1>
+        <p>In this section, you will find the necessary tools to simply summarize and condense your notes.</p>
+      </header>
+      <main className="App-main">
+        <section className="note-upload">
+          <h2>Generate instant study materials</h2>
+          <textarea
+            placeholder="Put your notes here. We'll do the rest."
+            value={notes}
+            onChange={handleNotesChange}
+            disabled={isSubmitting}
           />
-          <button onClick={() => handleNumberChange(1)}>+</button>
+          <input
+            type="file"
+            onChange={handlePdfChange}
+            accept=".pdf"
+            disabled={isSubmitting}
+          />
+          <button onClick={handleSubmit} disabled={isSubmitting}>
+          {isSubmitting ? <div className="loading-animation"></div> : 'Start Transforming'}
+          </button>
+          </section>
+        <aside className="note-options">
+          {/* Your existing code for note options */}
+        </aside>
+        <section className="note-summary">
+            <h3>Summary</h3>
+            <div className="summary-content"> {/* Apply the new styles to this div */}
+            <p>{displayedSummary || 'Your summary will appear here.'}</p>
         </div>
-        </section>
-        <aside className="note-options">
-          {/* Your existing code for note options */}
-        </aside>
-        <section className="note-summary">
-          <h3>Summary</h3>
-          <p>{displayedSummary || 'Your summary will appear here.'}</p>
-        </section>
-      </main>
-    </div>
-  );
+        </section>
+      </main>
+    </div>
+  );
 }
 
 export default Notes;
