@@ -3,11 +3,15 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import "pdfjs-dist/legacy/build/pdf.worker";
 import "./App.css";
 
-function notes() {
+function App() {
   const [notes, setNotes] = useState("");
   const [summary, setSummary] = useState("");
+  const [test, setTest] = useState("");
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
-  const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [summaryKey, setSummaryKey] = useState(false);
+  const [testKey, setTestKey] = useState(false);
+
   //quantity values for multiple choice questions, long answer questions, short answer questions, definitions, calculations
   const [mcq, setMcq] = useState(5);
   const [laq, setLaq] = useState(2);
@@ -96,8 +100,10 @@ function notes() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true); // Function to handle summarization
+
     const summarizeText = async (text) => {
       try {
+        console.log("text", text);
         const response = await fetch(
           "https://api.openai.com/v1/chat/completions",
           {
@@ -105,11 +111,12 @@ function notes() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
               messages: [{ role: "user", content: text }],
+              
             }),
           }
         );
@@ -147,37 +154,66 @@ function notes() {
     } else {
       setSummary("Please enter some notes or upload a PDF file to summarize.");
     }
+    setSummaryKey(!summaryKey);
   };
 
+  const createTest = async () => {
+    setIsSubmitting(true); // Function to handle summarization
+    //check that question values are not 0
+    
+    if(mcq === 0 && laq === 0 && saq === 0 && def === 0 && calc === 0){
+      setTest("Please enter some questions to generate a test.");
+    }else{
+      setTest("Generating test...");
+    }
+    setTestKey(!testKey);
+   };
+
   const [displayedSummary, setDisplayedSummary] = useState("");
+  const [displayedTest, setDisplayedTest] = useState("");
 
+  // Update the displayed summary when start transforming is pressed
+  // update the displayed test when generate test is pressed
+  //types out the strings letter by letter
   useEffect(() => {
-    const updateDisplayedSummary = () => {
-      const summaryArray = summary.split("");
+    if (summary) {
+      //add first letter to displayed summary
+      setDisplayedSummary(summary[0]);
       let i = 0;
-
-      setDisplayedSummary(summaryArray[0]);
-      const intervalId = setInterval(() => {
-        if (i < summaryArray.length - 1) {
-          setDisplayedSummary((prev) => prev + summaryArray[i]);
+      let interval = setInterval(() => {
+        if (i < summary.length-1) {
+          setDisplayedSummary((prev) =>`${prev}${summary.charAt(i)}`);
           i++;
         } else {
-          clearInterval(intervalId);
-        }
-        if (i === summaryArray.length - 2) {
+          clearInterval(interval);
           setIsSubmitting(false);
-          console.log("submitting", isSubmitting);
         }
-      }, 20); // Adjust the interval duration as needed'
-    }; // Whenever the 'summary' state changes, update the displayed summary
 
-    if (summary) {
-      setDisplayedSummary("");
-      updateDisplayedSummary();
+      }, 20);
     }
-  }, [summary]);
+   
+  }
+  , [summaryKey]);
 
-  
+  useEffect(() => {
+    if (test) {
+      //add first letter to displayed summary
+      setDisplayedTest(test[0]);
+
+      let i = 0;
+      let interval = setInterval(() => {
+        if (i < test.length) {
+          setDisplayedTest((prev) =>`${prev}${test.charAt(i)}`);
+          i++;
+        } else {
+          clearInterval(interval);
+          setIsSubmitting(false);
+        }
+
+      }, 20);
+    }
+  }
+  , [testKey]);  
 
   return (
     <div className="App">
@@ -305,14 +341,24 @@ function notes() {
 			</div>
 		  </p>
 		  
-		  <p>
-		  <button style={{maxWidth:"100px",margin:"0 auto", display: "block", backgroundColor: "#808080"}} onClick={handleReset}>Reset</button>
+		  <p style={{     
+        display: "flex",
+        gap: "10px",        
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "20px",
+
+      }}>
+		  <button style={{maxWidth:"100px", display: "block", backgroundColor: "#808080"}} onClick={handleReset}>Reset</button>
 		  <button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? "Transforming..." : "Start Transforming"}
       </button>
 
-      <button onClick={handlePrint} disabled={!summary||isSubmitting} className="print-button">
+      <button onClick={handlePrint} disabled={isSubmitting} className="print-button">
             Print Summary
+      </button>
+      <button onClick={createTest} disabled={isSubmitting} className="testGen-button">
+            Generate Test
       </button>
 		  </p>
         </section>
@@ -323,10 +369,13 @@ function notes() {
                 
 
         <section className="note-summary">
-                    <h3>Summary</h3>
-                    
-          <p>{displayedSummary || "Your summary will appear here."}</p>
-                  
+        <h3>Summary</h3>
+        <p>{displayedSummary || "Your summary will appear here."}</p>
+        
+        <h4>Practice Test</h4>
+        <p>{displayedTest || "Your test will appear here."}</p>
+
+
         </section>
               
       </main>
@@ -335,4 +384,4 @@ function notes() {
   );
 }
 
-export default notes;
+export default App;
