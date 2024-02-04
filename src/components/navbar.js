@@ -35,6 +35,7 @@ export const NavBar = () => {
             <Nav.Link as={HashLink} to="#home" className={activeLink === 'home' ? 'active nav-link' : 'nav-link'} onClick={() => onUpdateActiveLink('home')}>Home</Nav.Link>
             <Nav.Link as={HashLink} to="#notes-summary" className={activeLink === 'notes-summary' ? 'active nav-link' : 'nav-link'} onClick={() => onUpdateActiveLink('notes-summary')}>Notes Summary</Nav.Link>
             <Nav.Link as={HashLink} to="#mock-up-tests" className={activeLink === 'mock-up-tests' ? 'active nav-link' : 'nav-link'} onClick={() => onUpdateActiveLink('mock-up-tests')}>Mock Up Tests</Nav.Link>
+            <Nav.Link as={HashLink} to="#resources" className={activeLink === 'resources' ? 'active nav-link' : 'nav-link'} onClick={() => onUpdateActiveLink('resources')}>Resources</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

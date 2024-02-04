@@ -36,13 +36,13 @@ function Resources() {
     // Function to handle summarization
     
     const summarizeText = async (text) => {
-    const prompt = `Please create a quiz out of the following information/word/topic:\n\n${text}`;
+    const prompt = `Please find some resources on this information/word/topic:\n\n${text}`;
       try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -131,14 +131,14 @@ const handleNumberChange = (value) => {
 
 
   return (
-    <div className="App">
+    <div id = "resources" className="App">
       <header className="App-header">
-        <h1>iLearn</h1>
-        <p>Enhanced by AI</p>
+        <h1>Resources</h1>
+        <p>Automatically Generate Resources</p>
       </header>
       <main className="App-main">
         <section className="note-upload">
-          <h2>Generate instant study materials</h2>
+          <h2>Generate Instant Resources to Improve Your Knowledge</h2>
           <textarea
             placeholder="Put your notes here. We'll do the rest."
             value={notes}
@@ -154,31 +154,13 @@ const handleNumberChange = (value) => {
           <button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Transforming...' : 'Start Transforming'}
           </button>
-            <h2>Test Formatting</h2>
-                <p align="left">Multiple Choice</p>
-                <div className="number">
-					<style>
-						input[type=number]::-webkit-inner-spin-button,
-						input[type=number]::-webkit-outer-spin-button -webkit-appearance: none;
-					</style>
-			<button onClick={() => handleNumberChange(-1)}>-</button>
-          	<input
-            className="quantity"
-            min="0"
-            name="quantity"
-            value={quantity}
-            type="number"
-            onChange={(e) => handleNumberChange(e.target.value)}
-          />
-          <button onClick={() => handleNumberChange(1)}>+</button>
-        </div>
         </section>
         <aside className="note-options">
           {/* Your existing code for note options */}
         </aside>
         <section className="note-summary">
-          <h3>Summary</h3>
-          <p>{displayedSummary || 'Your summary will appear here.'}</p>
+          <h3>Output</h3>
+          <p>{displayedSummary || 'Your resources will appear here.'}</p>
         </section>
       </main>
     </div>

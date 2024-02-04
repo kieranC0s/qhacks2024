@@ -36,13 +36,13 @@ function Notes() {
     // Function to handle summarization
     
     const summarizeText = async (text) => {
-    const prompt = `Please create a quiz out of the following information/word/topic:\n\n${text}`;
+    const prompt = `Please create a summary out of the following information/word/topic:\n\n${text}`;
       try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -131,14 +131,13 @@ const handleNumberChange = (value) => {
 
 
 return (
-    <div className="App">
-        
-      <header className="App-header">
+    <div id = "notes-summary" className="notes-container">
+      <div className="notes-header">
         <h1>Notes Summary</h1>
-        <p>In this section, you will find the necessary tools to simply summarize and condense your notes.</p>
-      </header>
-      <main className="App-main">
-        <section className="note-upload">
+        <p>In this section you will find the necessary tools to simply summarize, and condense your notes.</p>
+      </div>
+      <div className="notes-content">
+        <div className="notes-input">
           <h2>Generate instant study materials</h2>
           <textarea
             placeholder="Put your notes here. We'll do the rest."
@@ -153,19 +152,20 @@ return (
             disabled={isSubmitting}
           />
           <button onClick={handleSubmit} disabled={isSubmitting}>
-          {isSubmitting ? <div className="loading-animation"></div> : 'Start Transforming'}
+            {isSubmitting ? 'Transforming...' : 'Start Transforming'}
           </button>
-          </section>
-        <aside className="note-options">
-          {/* Your existing code for note options */}
-        </aside>
-        <section className="note-summary">
-            <h3>Summary</h3>
-            <div className="summary-content"> {/* Apply the new styles to this div */}
-            <p>{displayedSummary || 'Your summary will appear here.'}</p>
         </div>
-        </section>
-      </main>
+        <div className="notes-summary">
+          <h3>Summary</h3>
+          <textarea
+          className="summary-textarea"
+          value={summary}
+          onChange={e => setSummary(e.target.value)}
+          placeholder="The summarized content will be shown here."
+          readOnly // Remove this line if you want the text to be editable
+        />
+        </div>
+      </div>
     </div>
   );
 }

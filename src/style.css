@@ -213,7 +213,6 @@ body, html {
 }
 
 /* style.css */
-/* style.css */
 .App {
   font-family: 'Arial', sans-serif;
   color: #333;
@@ -299,64 +298,56 @@ button:disabled {
   border-top-color: var(--text-color);
   animation: spin 1s ease-in-out infinite;
 }
-
 /* style.css */
-.note-summary {
-  background-color: #fff; /* or any color that fits your theme */
-  border-radius: 15px;
+.notes-container {
+  background: #ffffff; /* Or any color that matches your theme */
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); /* This creates the shadow around the container */
   padding: 20px;
-  position: relative;
-  z-index: 1; /* Ensure the shadow sits above any background elements */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2); /* This creates the shadow */
+  margin: 20px auto; /* Adjust the margin as needed */
+  max-width: 960px; /* Adjust the width as needed */
+  overflow: hidden; /* Ensures the child elements don't overflow */
 }
 
-/* Create a pseudo-element for gradient backlighting */
-.note-summary::before {
-  content: '';
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  bottom: -10px;
-  left: -10px;
-  z-index: -1;
-  background: radial-gradient(circle at center, rgba(255,255,255,0) 0%, rgba(0,0,0,0.5) 100%);
-  border-radius: 15px; /* Same as the .note-summary to maintain the shape */
-  transition: opacity 0.3s ease-in-out;
+.notes-header {
+  margin-bottom: 30px; /* Adds more space below the header */
 }
 
-/* When hovering over the .note-summary, increase the size of the gradient to create a glow effect */
-.note-summary:hover::before {
-  top: -20px;
-  right: -20px;
-  bottom: -20px;
-  left: -20px;
-  opacity: 1; /* Adjust the opacity to control the intensity of the glow */
+.notes-content {
+  display: flex;
+  flex-direction: column; /* Stack the children vertically */
+  gap: 20px; /* This adds space between the children */
 }
 
-/* style.css */
-.notes-section {
-  background: rgba(255, 255, 255, 0.1); /* Adjust the alpha for transparency */
-  border-radius: 15px;
+.notes-input, .notes-summary {
+  background: linear-gradient(to right, #2d91f2, #1c4e80); /* Gradient background */
+  border-radius: 10px;
   padding: 20px;
-  position: relative;
-  z-index: 1;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* This creates the shadow */
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(255, 255, 255, 0.18); /* This adds a subtle border */
+  color: #ffffff; /* Adjust text color for readability */
 }
 
-.notes-section::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  bottom: -2px;
-  left: -2px;
-  z-index: -1;
-  background: linear-gradient(to right, #0072ff, #00c6ff); /* Your gradient colors */
-  border-radius: 15px; /* Same as the .notes-section to match the corners */
+textarea, input, button {
+  margin: 10px 0; /* Adds space around inputs and button */
+  padding: 10px;
+  border: 1px solid #ccc; /* A lighter border */
+  border-radius: 5px;
 }
 
+button {
+  background-color: #4CAF50; /* Adjust to match your theme */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049; /* A slightly darker shade for hover effect */
+}
+
+button:disabled {
+  background-color: #cccccc;
+}
 
 @keyframes spin {
   0% {

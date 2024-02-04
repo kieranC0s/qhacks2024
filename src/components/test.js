@@ -8,12 +8,13 @@ function Test() {
   const [summary, setSummary] = useState("");
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
+  const [summaryKey, setSummaryKey] = useState(false); // State to force re-render the summary component
   //quantity values for multiple choice questions, long answer questions, short answer questions, definitions, calculations
-  const [mcq, setMcq] = useState(5);
-  const [laq, setLaq] = useState(2);
-  const [saq, setSaq] = useState(3);
-  const [def, setDef] = useState(3);
-  const [calc, setCalc] = useState(1);
+  const [mcq, setMcq] = useState(0);
+  const [laq, setLaq] = useState(0);
+  const [saq, setSaq] = useState(0);
+  const [def, setDef] = useState(0);
+  const [calc, setCalc] = useState(0);
 
   
   const handleNumberChange = (operation, val) => {
@@ -96,7 +97,17 @@ function Test() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true); // Function to handle summarization
+    if(mcq === 0 && laq === 0 && saq === 0 && def === 0 && calc === 0){
+        alert("Please enter a valid number of questions for the test");
+        setIsSubmitting(false);
+        return;
+        }
+
     const summarizeText = async (text) => {
+        console.log(mcq, laq, saq, def, calc);
+        const prompt = `Please create a quiz with ` + mcq + ` multiple choice question(s), `+ laq + ` long answer question(s), ` + saq + ` short answer question(s), ` + def + ` definition question(s), and `
+        + calc+ ` calculation question(s). It should be based on of the following information/word/topic:\n\n${text}`;
+        console.log(prompt);
       try {
         const response = await fetch(
           "https://api.openai.com/v1/chat/completions",
@@ -105,17 +116,19 @@ function Test() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
-              messages: [{ role: "user", content: text }],
+              messages: [{ role: "user", content: prompt }],
             }),
           }
         );
         const responseData = await response.json();
         if (response.ok) {
+          console.log(responseData.choices[0].message.content);
           setSummary(responseData.choices[0].message.content);
+          setSummaryKey(!summaryKey);
         } else {
           console.error("Response not ok:", responseData);
           setSummary("Failed to generate summary.");
@@ -152,49 +165,33 @@ function Test() {
   const [displayedSummary, setDisplayedSummary] = useState("");
 
   useEffect(() => {
-    const updateDisplayedSummary = () => {
-      const summaryArray = summary.split("");
+        if(summary){
       let i = 0;
+      setDisplayedSummary(summary[0]);
 
-      setDisplayedSummary(summaryArray[0]);
       const intervalId = setInterval(() => {
-        if (i < summaryArray.length - 1) {
-          setDisplayedSummary((prev) => prev + summaryArray[i]);
-          i++;
+        i++;
+        if (i < summary.length - 1) {
+          setDisplayedSummary((prev) => `${prev}${summary[i]}`);
+          
         } else {
           clearInterval(intervalId);
-        }
-        if (i === summaryArray.length - 2) {
           setIsSubmitting(false);
-          console.log("submitting", isSubmitting);
         }
       }, 20); // Adjust the interval duration as needed'
     }; // Whenever the 'summary' state changes, update the displayed summary
-
-    if (summary) {
-      setDisplayedSummary("");
-      updateDisplayedSummary();
-    }
-  }, [summary]);
+  }, [summaryKey]);
 
   
 
   return (
-    <div className="App">
-            
-      <header className="App-header">
-                <h1>iLearn</h1>
-                <p>Enhanced by AI</p>
-              
-      </header>
-            
-      <main className="App-main">
-                
+    <div id="mock-up-tests" className="App">  
+      <main className="App-main">               
         <section
           className="note-upload"
           style={{ display: "flex", flexDirection: "column" }}
         >
-          <h2>Generate instant study materials</h2>
+          <h2>Generate Practice Tests Based Off Of Your Study Materials</h2>
           <textarea
             placeholder="Put your notes here. We'll do the rest."
             value={notes}
@@ -207,10 +204,7 @@ function Test() {
             accept=".pdf"
             disabled={isSubmitting}
           />
-          
-
           <h3>Test Formatting</h3>
-
           <p>
             <div style={{ float: "left", marginTop: 25 }}>
               Multiple Choice Questions
@@ -323,7 +317,7 @@ function Test() {
                 
 
         <section className="note-summary">
-                    <h3>Summary</h3>
+                    <h3>Generated Test</h3>
                     
           <p>{displayedSummary || "Your summary will appear here."}</p>
                   
