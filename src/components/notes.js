@@ -111,7 +111,7 @@ function App() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
@@ -122,7 +122,9 @@ function App() {
         );
         const responseData = await response.json();
         if (response.ok) {
+          console.log("Response data:", responseData.choices[0].message.content);
           setSummary(responseData.choices[0].message.content);
+          setSummaryKey(!summaryKey);
         } else {
           console.error("Response not ok:", responseData);
           setSummary("Failed to generate summary.");
@@ -154,7 +156,6 @@ function App() {
     } else {
       setSummary("Please enter some notes or upload a PDF file to summarize.");
     }
-    setSummaryKey(!summaryKey);
   };
 
   const createTest = async () => {
@@ -167,7 +168,7 @@ function App() {
       setTest("Generating test...");
     }
     setTestKey(!testKey);
-   };
+  };
 
   const [displayedSummary, setDisplayedSummary] = useState("");
   const [displayedTest, setDisplayedTest] = useState("");
@@ -176,10 +177,12 @@ function App() {
   // update the displayed test when generate test is pressed
   //types out the strings letter by letter
   useEffect(() => {
+    console.log("summaryKey", summaryKey);
     if (summary) {
       //add first letter to displayed summary
       setDisplayedSummary(summary[0]);
       let i = 0;
+
       let interval = setInterval(() => {
         if (i < summary.length-1) {
           setDisplayedSummary((prev) =>`${prev}${summary.charAt(i)}`);
