@@ -11,8 +11,8 @@ export const Banner = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [text, setText] = useState('');
   const [delta, setDelta] = useState(300 - Math.random() * 100);
-  const toRotate = ["Welcome to iLearn!"]; // Add more items to rotate if needed
-  const period = 2000;
+  const toRotate = ["Welcome to StudyStream!"]; // Add more items to rotate if needed
+  const period = 1000;
 
   useEffect(() => {
     const tick = () => {
@@ -72,8 +72,10 @@ export const Banner = () => {
             {({ isVisible }) =>
               <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
                 <div className="text-background"> {/* Add this line */}
-                  <h1>{} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Welcome to iLearn" ]'><span className="wrap">{text}</span></span></h1>
-                  <p>Dive into a comprehensive suite of tools designed to enrich your learning journey. From insightful summaries to bespoke test creation and a wealth of resources, every path leads to new discoveries. Choose your next step:</p>
+                  <h1>{} <span className="txt-rotate" dataPeriod="1000" data-rotate='[ "Welcome to StudyStream" ]'><span className="wrap">{text}</span></span></h1>
+                  <p>Dive into a comprehensive suite of tools designed to enrich your learning journey. From insightful summaries to bespoke test creation and a wealth of resources, every path leads to new discoveries. 
+                    </p>
+                <p className="sub-heading">Choose your next steps below:</p>
                 </div> {/* Close the div here */}
                 </div>}
           </TrackVisibility>
@@ -82,7 +84,7 @@ export const Banner = () => {
             <TrackVisibility>
               {({ isVisible }) =>
                 <div className={isVisible ? "animate__animated animate__rubberBand" : ""}> 
-                  <img src={mascot} alt="Mascot Img" style={{ width: '700px', height: 'auto', marginRight: '40px' }}/>
+                  <img src={mascot} alt="Mascot Img" />
                 </div>}
             </TrackVisibility>
           </Col>

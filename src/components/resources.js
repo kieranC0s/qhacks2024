@@ -58,7 +58,7 @@ function Resources() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -127,7 +127,7 @@ function Resources() {
     setIsSubmitting(false);
     console.log('submitting', isSubmitting);
     }   
-      }, 30); // Adjust the interval duration as needed'
+      }, 5); // Adjust the interval duration as needed'
 
         
    };
@@ -173,12 +173,14 @@ return (
           style={{ display: 'none' }} // Hide the actual file input
         />
       </div>
-          <button onClick={handleSubmit} disabled={isSubmitting} className="notes-button">
+        <div className="file-input-container">
+          <button onClick={handleSubmit} disabled={isSubmitting} className="file-input-button">
             {isSubmitting ? 'Generating...' : 'Start Generating Resources'}
           </button>
-          <button onClick={copyToClipboard} disabled={!summary || isSubmitting}>
+          <button onClick={copyToClipboard} disabled={!summary || isSubmitting} className="file-input-button">
             Copy to Clipboard
           </button>
+        </div>
         </div>
         <div className="notes-summary">
           <h3>Output</h3>

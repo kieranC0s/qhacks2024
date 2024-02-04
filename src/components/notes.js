@@ -59,7 +59,7 @@ const copyToClipboard = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -128,7 +128,7 @@ const copyToClipboard = () => {
     setIsSubmitting(false);
     console.log('submitting', isSubmitting);
     }   
-      }, 30); // Adjust the interval duration as needed' 
+      }, 5); // Adjust the interval duration as needed' 
    };
     // Whenever the 'summary' state changes, update the displayed summary
     if (summary) {
@@ -141,7 +141,7 @@ const handleNumberChange = (value) => {
 }
 
 return (
-    <div id = "notes-summary" className="notes-summary">
+    <div id = "notes-summary" className="notes-container">
       <div className="notes-header">
         <h1>Notes Summary</h1>
         <p>In this section you will find the necessary tools to simply summarize, and condense your notes.</p>
@@ -155,7 +155,7 @@ return (
             onChange={handleNotesChange}
             disabled={isSubmitting}
           />
-          <div className="file-input-container">
+        <div className="file-input-container">
         <button onClick={handleFileButtonClick} className="file-input-button">
           Choose File <ArrowRightCircle size={15} />
         </button>
@@ -167,12 +167,14 @@ return (
           style={{ display: 'none' }} // Hide the actual file input
         />
       </div>
-          <button onClick={handleSubmit} disabled={isSubmitting}>
+        <div className="file-input-container">
+          <button onClick={handleSubmit} disabled={isSubmitting} className="file-input-button">
             {isSubmitting ? 'Transforming...' : 'Start Transforming'}
           </button>
-          <button onClick={copyToClipboard} disabled={!summary || isSubmitting}>
+          <button onClick={copyToClipboard} disabled={!summary || isSubmitting} className="file-input-button">
             Copy to Clipboard
           </button>
+        </div>
         </div>
         <div className="notes-summary">
           <h3>Summary</h3>

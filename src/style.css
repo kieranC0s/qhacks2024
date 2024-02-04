@@ -1,3 +1,20 @@
+/************ Custom Font ************/
+@font-face {
+	font-family: Centra;
+	src: url('./assets/font/CentraNo2-Bold.ttf');
+	font-weight: 700;
+}
+@font-face {
+	font-family: Centra;
+	src: url('./assets/font/CentraNo2-Medium.ttf');
+	font-weight: 500;
+}
+@font-face {
+	font-family: Centra;
+	src: url('./assets/font/CentraNo2-Book.ttf');
+	font-weight: 400;
+}
+
 /* General resets */
 * {
   margin: 0;
@@ -60,7 +77,9 @@ body, html {
 }
 
 .navbar-scrolled {
-  background-color: #333;
+  background-color: rgba(51, 51, 51, 0.8);
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the color and opacity as needed */
+
   padding: 2rem 2rem;
   margin-top: -1.5rem;
   size-adjust: auto;
@@ -109,7 +128,7 @@ body, html {
   background-repeat: no-repeat;
   background-attachment: fixed;
   position: relative;
-  width: 100vw;
+  width: relative;
   height: 80vh;
   overflow: hidden;
 }
@@ -123,6 +142,18 @@ body, html {
   margin-bottom: 16px;
   display: inline-block;
 }
+
+.banner .wrap {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 65px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+}
+
 .banner h1 {
   font-size: 65px;
   font-weight: 700;
@@ -132,6 +163,14 @@ body, html {
   display: block;
 }
 .banner p {
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+  margin-bottom: 20px;
+}
+.banner sub-heading {
   color: #ffffff;
   font-size: 20px;
   letter-spacing: 0.8px;
@@ -158,7 +197,7 @@ body, html {
 }
 
 .text-background {
-  background-color: rgba(0, 0, 0, 0.7); /* Adjust the color and opacity as needed */
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the color and opacity as needed */
   padding: 20px; /* Add padding to give some space around the text */
   border-radius: 10px; /* Optional: if you want rounded corners */
   width: 40%; /* Adjust the width as needed */
@@ -167,6 +206,7 @@ body, html {
   position: absolute;
   top: 44%;
   position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Add a shadow for depth */
 }
 
 .App-header {
@@ -181,7 +221,7 @@ body, html {
 
 .App-main {
   position: relative; /* Needed for z-index to take effect */
-  z-index: 5; /* Lower index so it's below the header */
+  z-index: 10; /* Lower index so it's below the header */
   margin-top: -50px; /* Pull the main content up to overlap with the header */
 }
 
@@ -205,10 +245,10 @@ body, html {
 
 .banner img {
   position: absolute;
-  top: 80%; /* Center vertically */
+  margin-top: -300px; /* Adjust the margin as needed */
   right: 10vw; /* 10% of the viewport width from the right */
   transform: translate(-50%, -50%) scale(0.7); /* Adjust the scale if needed */
-  max-width: 20%; /* Limit the maximum width of the image */
+  max-width: 30%; /* Limit the maximum width of the image */
 }
 
 /* Summary.css */
@@ -241,7 +281,7 @@ body, html {
 
 .App-main {
   padding: 20px;
-  background-color: #fff; /* Adjust based on your theme */
+  background-color: #ddd; /* Adjust based on your theme */
   backdrop-filter: blur(10px); /* Glassmorphism effect */
   border-radius: var(--border-radius);
 }
@@ -253,11 +293,11 @@ body, html {
 }
 
 .notes-summary {
-  background-color: #e0f7fa; /* Light blue background for a softer look */
+  background-color: #ddd; /* Light blue background for a softer look */
   padding: 20px;
   border-radius: 5px;
   margin-bottom: 20px; /* Adds space below the component */
-  width: 60%;
+  width: 100%;
   height: 80%;
   margin: 0 auto; /* Center the component */
 }
@@ -317,7 +357,7 @@ button:disabled {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); /* This creates the shadow around the container */
   padding: 20px;
   margin: 20px auto; /* Adjust the margin as needed */
-  max-width: 960px; /* Adjust the width as needed */
+  max-width: 1200px; /* Adjust the width as needed */
   overflow: hidden; /* Ensures the child elements don't overflow */
 }
 
@@ -465,6 +505,12 @@ button:disabled {
 
 /* File input styling */
 
+.file-input-container {
+  display: flex; /* Use flexbox to align children side by side */
+  align-items: center; /* Center alignment for items */
+  justify-content: flex-start; /* Align items to the start of the container */
+}
+
 .file-input-button {
   background-color: #2d91f2; /* Your theme blue color */
   color: #fff; /* White text color */
@@ -476,6 +522,10 @@ button:disabled {
   align-items: center; /* Center alignment for items */
   justify-content: center; /* Center the content */
   gap: 10px; /* Space between the text and the icon */
+  margin-right: 10px; /* Optional: Add some space to the right */
+  display: flex; /* Use flexbox to align children side by side */
+  align-items: center; /* Center alignment for items */
+  justify-content: flex-start; /* Align items to the start of the container */
 }
 
 .file-input-button:hover {
@@ -523,4 +573,21 @@ input[type='file'] {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+
+.question-container {
+  border: 1px solid #ccc;
+  background:  #9c9191;
+  border-radius: 10px;
+
+  width: 100%;
+  /* change text colour to b lack*/
+  color: black;
+
+  padding: 10px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
 }

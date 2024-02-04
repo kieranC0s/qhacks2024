@@ -28,7 +28,7 @@ export const NavBar = () => {
       <Container>
         <Navbar.Brand as={HashLink} to="#home" className="navbar-brand">
         <img src={logo} alt="Logo" className="logo" />
-          iLearn
+          StudyStream
         </Navbar.Brand>
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto">

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../style.css';
-import { ArrowRightCircle } from 'react-bootstrap-icons';
+import { AlignCenter, ArrowRightCircle } from 'react-bootstrap-icons';
 
 function Test() {
   const [notes, setNotes] = useState("");
@@ -121,7 +121,7 @@ function Test() {
     const summarizeText = async (text) => {
         console.log(mcq, laq, saq, def, calc);
         const prompt = `Please create a quiz with ` + mcq + ` multiple choice question(s), `+ laq + ` long answer question(s), ` + saq + ` short answer question(s), ` + def + ` definition question(s), and `
-        + calc+ ` calculation question(s). It should be based on of the following information/word/topic:\n\n${text}`+ `Make sure you list the answers after in the formatt:  ANSWER KEY: 1. A 2. B 3. C 4. B......, after the list of questions`;
+        + calc+ ` calculation question(s). It should be based on of the following information/word/topic:\n\n${text}`+ ` Make sure you list the answers after in the formatt:  ANSWER KEY: 1. A 2. B 3. C 4. B......, after the list of questions. ANSWER KEY must be all caps.`;
         console.log(prompt);
       try {
         const response = await fetch(
@@ -131,7 +131,7 @@ function Test() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
@@ -215,7 +215,7 @@ function Test() {
           clearInterval(intervalId);
           setIsSubmitting(false);
         }
-      }, 20); // Adjust the interval duration as needed'
+      }, 5); // Adjust the interval duration as needed'
     }; // Whenever the 'summary' state changes, update the displayed summary
   }, [summaryKey]);
 
@@ -250,109 +250,110 @@ function Test() {
         />
       </div>
         </div>
-        <div className="test-formatting-section">
-          <h2>Test Formatting</h2>
-          <p>
-            <div style={{ float: "left", marginTop: 25 }}>
-              Multiple Choice Questions
+        <section className="question-container" style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+            <div>
+            <div style={{ float: "left", marginTop: 10 }}>
+            Multiple Choice Questions
             </div>
             <div style={{ float: "right" }}>
-              <button onClick={() => handleNumberChange("-","mcq")}>-</button>
-              <input
+            <button onClick={() => handleNumberChange("-", "mcq")}>-</button>
+            <input
                 type="numeric"
                 id="mulQs"
-                min="1"
+                min="0"
                 max="10"
                 style={{ width: 60, height: 28, textAlign: "center" }}
                 value={mcq}
                 onChange={handleNumberChange}
-              />
-              <button onClick={() => handleNumberChange("+","mcq")}>+</button>
+            />
+            <button onClick={() => handleNumberChange("+", "mcq")}>+</button>
             </div>
-          </p>
+        </div>
 
-          <p>
-            <div style={{ float: "left", marginTop: 25 }}>
-              Short Answer Questions
+        <div>
+            <div style={{ float: "left", marginTop: 10 }}>
+            Short Answer Questions
             </div>
             <div style={{ float: "right" }}>
-              <button onClick={() => handleNumberChange("-","saq")}>-</button>
-              <input
+            <button onClick={() => handleNumberChange("-", "saq")}>-</button>
+            <input
                 type="numeric"
                 id="mulQs"
-                min="1"
+                min="0"
                 max="10"
                 style={{ width: 60, height: 28, textAlign: "center" }}
                 value={saq}
                 onChange={handleNumberChange}
-              />
-              <button onClick={() => handleNumberChange("+","saq")}>+</button>
+            />
+            <button onClick={() => handleNumberChange("+", "saq")}>+</button>
             </div>
-          </p>
-
-		  <p>
-			<div style={{ float: "left", marginTop: 25 }}>
-			 Long Answer Questions
-			</div>
-			<div style={{ float: "right" }}>
-			  <button onClick={() => handleNumberChange("-","laq")}>-</button>
-			  <input
-				type="numeric"
-				id="mulQs"
-				min="1"
-				max="10"
-				style={{ width: 60, height: 28, textAlign: "center" }}
-				value={laq}
-				onChange={handleNumberChange}
-			  />
-			  <button onClick={() => handleNumberChange("+","laq")}>+</button>
-			</div>
-		  </p>
-
-		  <p>
-			<div style={{ float: "left", marginTop: 25 }}>
-			  Definitions
-			</div>
-			<div style={{ float: "right" }}>
-			  <button onClick={() => handleNumberChange("-","def")}>-</button>
-			  <input
-			  type="numeric"
-			  id="mulQs"
-			  min="1"
-			  max="10"
-			  style={{ width: 60, height: 28, textAlign: "center" }}
-			  value={def}
-			  onChange={handleNumberChange}
-			  />
-			  <button onClick={() => handleNumberChange("+","def")}>+</button>
-			</div>
-		  </p>	
-		  <p>
-			<div style={{ float: "left", marginTop: 25 }}>
-			  Calculations
-			</div>
-			<div style={{ float: "right" }}>
-			  <button onClick={() => handleNumberChange("-","calc")}>-</button>
-			  <input
-			  type="numeric"
-			  id="mulQs"
-			  min="1"
-			  max="10"
-			  style={{ width: 60, height: 28, textAlign: "center" }}
-			  value={calc}
-			  onChange={handleNumberChange}
-			  />
-			  <button onClick={() => handleNumberChange("+","calc")}>+</button>
-			</div>
-		  </p>
-		  <button style={{maxWidth:"100px",margin:"0 auto", display: "block", backgroundColor: "#808080"}} onClick={handleReset}>Reset</button>
-		  <button onClick={handleSubmit} disabled={isSubmitting}>
+        </div>
+        
+        <div>
+            <div style={{ float: "left", marginTop: 10 }}>
+            Long Answer Questions
+            </div>
+            <div style={{ float: "right" }}>
+            <button onClick={() => handleNumberChange("-", "laq")}>-</button>
+            <input
+                type="numeric"
+                id="mulQs"
+                min="0"
+                max="10"
+                style={{ width: 60, height: 28, textAlign: "center" }}
+                value={laq}
+                onChange={handleNumberChange}
+            />
+            <button onClick={() => handleNumberChange("+", "laq")}>+</button>
+            </div>
+        </div>
+        <div>
+            <div style={{ float: "left", marginTop: 10 }}>
+            Definitions
+            </div>
+            <div style={{ float: "right" }}>
+            <button onClick={() => handleNumberChange("-", "def")}>-</button>
+            <input
+                type="numeric"
+                id="mulQs"
+                min="0"
+                max="10"
+                style={{ width: 60, height: 28, textAlign: "center" }}
+                value={def}
+                onChange={handleNumberChange}
+            />
+            <button onClick={() => handleNumberChange("+", "def")}>+</button>
+            </div>
+        </div>
+        <div>
+            <div style={{ float: "left", marginTop: 10 }}>
+            Calculations
+            </div>
+            <div style={{ float: "right" }}>
+            <button onClick={() => handleNumberChange("-", "calc")}>-</button>
+            <input
+                type="numeric"
+                id="mulQs"
+                min="0"
+                max="10"
+                style={{ width: 60, height: 28, textAlign: "center" }}
+                value={calc}
+                onChange={handleNumberChange}
+            />
+            <button onClick={() => handleNumberChange("+", "calc")}>+</button>
+            </div>
+        </div>
+        </section>
+        <div className="file-input-container">
+		  <button className="file-input-button" onClick={handleReset}>Reset</button>
+		  <button onClick={handleSubmit} disabled={isSubmitting} className="file-input-button">
             {isSubmitting ? 'Creating Test...' : 'Generate Test'}
           </button>
-          <button onClick={copyToClipboard} disabled={!summary || isSubmitting}>
+          <button onClick={copyToClipboard} disabled={!summary || isSubmitting} className="file-input-button">
             Copy to Clipboard
           </button>
           </div>
+        </div>
         <div className="notes-summary">
           <h3>Generated Test</h3>
           {isSubmitting ? (
@@ -365,19 +366,21 @@ function Test() {
             readOnly
             placeholder="The generated test will appear here."
           /></pre> )}
-          <pre><p>
+          <div className="notes-summary">
+          <pre>
              <button onClick={revealAnswers} disabled={isSubmitting || !testMade}
             className="testGen-button">
                 Reveal Answers
                 </button>
-                <p>
-
-                </p> {answerVisible && (answerStr )|| "Your answer key will appear here."}
-                </p>
+                {answerVisible && (
+                    <pre className='answers-textarea' style ={{whiteSpace: 'pre-wrap'}}>
+                    {answerStr || "Your answer key will appear here."}
             </pre>
+            )}
+            </pre>
+           </div>
         </div>
       </div>
-    </div>
   );
 }
 
