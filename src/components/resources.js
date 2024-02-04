@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../style.css';
+import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 function Resources() {
   const [notes, setNotes] = useState('');
@@ -10,6 +11,15 @@ function Resources() {
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
   const [quantity, setQuantity] = useState(5);
 
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(summary)
+      .then(() => {
+        alert('Summary copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy text to clipboard', err);
+      });
+    };
   const handleNotesChange = (event) => {
     setNotes(event.target.value);
   };
@@ -17,6 +27,12 @@ function Resources() {
   const handlePdfChange = (event) => {
     setPdfFile(event.target.files[0]);
   };
+
+    const fileInputRef = useRef();
+
+    const handleFileButtonClick = () => {
+    fileInputRef.current.click();
+    };
 
   const extractTextFromPdf = async (pdfData) => {
     const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
@@ -42,7 +58,7 @@ function Resources() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -129,42 +145,57 @@ const handleNumberChange = (value) => {
 
 }
 
-
-  return (
-    <div id = "resources" className="App">
-      <header className="App-header">
-        <h1>Resources</h1>
-        <p>Automatically Generate Resources</p>
-      </header>
-      <main className="App-main">
-        <section className="note-upload">
-          <h2>Generate Instant Resources to Improve Your Knowledge</h2>
-          <textarea
-            placeholder="Put your notes here. We'll do the rest."
-            value={notes}
-            onChange={handleNotesChange}
-            disabled={isSubmitting}
-          />
-          <input
-            type="file"
-            onChange={handlePdfChange}
-            accept=".pdf"
-            disabled={isSubmitting}
-          />
-          <button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? 'Transforming...' : 'Start Transforming'}
-          </button>
-        </section>
-        <aside className="note-options">
-          {/* Your existing code for note options */}
-        </aside>
-        <section className="note-summary">
-          <h3>Output</h3>
-          <p>{displayedSummary || 'Your resources will appear here.'}</p>
-        </section>
-      </main>
-    </div>
-  );
+return (
+    <div id="resources" className="notes-container">
+      <div className="notes-header">
+        <h1>Resources</h1>
+        <p>Automatically Generate Resources</p>
+      </div>
+      <div className="notes-content">
+        <div className="notes-input">
+          <h2>Generate Instant Resources to Improve Your Knowledge</h2>
+          <textarea
+            placeholder="Put your notes here. We'll do the rest."
+            value={notes}
+            onChange={handleNotesChange}
+            disabled={isSubmitting}
+            className="summary-textarea"
+          />
+          <div className="file-input-container">
+        <button onClick={handleFileButtonClick} className="file-input-button">
+          Choose File <ArrowRightCircle size={15} />
+        </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handlePdfChange}
+          accept=".pdf"
+          style={{ display: 'none' }} // Hide the actual file input
+        />
+      </div>
+          <button onClick={handleSubmit} disabled={isSubmitting} className="notes-button">
+            {isSubmitting ? 'Generating...' : 'Start Generating Resources'}
+          </button>
+          <button onClick={copyToClipboard} disabled={!summary || isSubmitting}>
+            Copy to Clipboard
+          </button>
+        </div>
+        <div className="notes-summary">
+          <h3>Output</h3>
+          {isSubmitting ? (
+            <div className="spinner-container">
+              <div className="spinner"></div>
+            </div> ) : (
+          <pre><textarea
+            className="summary-textarea"
+            value={displayedSummary}
+            readOnly
+            placeholder="Your resources will appear here."
+          /></pre> )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Resources;

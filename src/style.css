@@ -166,6 +166,7 @@ body, html {
   align-content: center;
   position: absolute;
   top: 44%;
+  position: relative;
 }
 
 .App-header {
@@ -203,16 +204,14 @@ body, html {
 }
 
 .banner img {
-  animation: updown 3s linear infinite;
   position: absolute;
-  right: 0;
-  top: 30%; /* Adjust the top position to bring the image up */
-  right: 15%;
-  transform: translateY(-50%) scale(0.7); /* Adjust the scale value to make the image smaller */
+  top: 80%; /* Center vertically */
+  right: 10vw; /* 10% of the viewport width from the right */
+  transform: translate(-50%, -50%) scale(0.7); /* Adjust the scale if needed */
   max-width: 20%; /* Limit the maximum width of the image */
 }
 
-/* style.css */
+/* Summary.css */
 .App {
   font-family: 'Arial', sans-serif;
   color: #333;
@@ -252,6 +251,18 @@ body, html {
   font-weight: 300;
   color: var(--blue-primary);
 }
+
+.notes-summary {
+  background-color: #e0f7fa; /* Light blue background for a softer look */
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px; /* Adds space below the component */
+  width: 60%;
+  height: 80%;
+  margin: 0 auto; /* Center the component */
+}
+
+/* Test component styles */
 
 textarea,
 input[type="file"] {
@@ -298,6 +309,7 @@ button:disabled {
   border-top-color: var(--text-color);
   animation: spin 1s ease-in-out infinite;
 }
+
 /* style.css */
 .notes-container {
   background: #ffffff; /* Or any color that matches your theme */
@@ -366,4 +378,149 @@ button:disabled {
 
 .navbar, .banner, .notes-container {
   animation: fadeIn 1s ease-in-out;
+}
+
+/* Shared styles for both Notes and Test components */
+
+.notes-section,
+.test-formatting-section,
+.notes-summary {
+  background: linear-gradient(to right, #2d91f2, #1c4e80);
+  border-radius: 10px;
+  padding: 20px;
+  color: #ffffff;
+  margin-bottom: 20px; /* Adds space between sections */
+}
+
+.notes-textarea,
+.file-input,
+.summary-textarea {
+  width: 100%;
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 10px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+}
+
+.file-input {
+  height: auto; /* Adjust height for file input */
+}
+
+
+/* Shared styles for Resources components */
+/* Apply the same styling to all input fields and buttons for consistency */
+.note-upload input[type="text"],
+.note-upload input[type="file"],
+.note-upload button {
+  width: 100%; /* This will make them take the full width of their container */
+  padding: 10px;
+  margin-bottom: 10px; /* Adds some space below the element */
+  border: 2px solid #2d91f2; /* Your theme color */
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding does not affect the width */
+}
+
+/* Override styles for the file input to make it visually similar to text inputs */
+.note-upload input[type="file"] {
+  cursor: pointer;
+  display: block; /* Align it with other block-level elements */
+  width: auto; /* Reset width to default to match text inputs or set a specific width as desired */
+  padding: 10px; /* Adjust padding to match text inputs */
+  text-overflow: ellipsis; /* Ensures long file names do not break the layout */
+}
+
+/* Footer Styling */
+
+/* style.css */
+
+.footer {
+  background: linear-gradient(to right, #2d91f2, #1c4e80); /* Use the gradient colors from your image */
+  color: #fff;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.social-media-icons a {
+  color: #fff;
+  margin: 0 10px;
+}
+
+.social-media-icons a:hover {
+  color: #ddd; /* Or any other hover effect color */
+}
+
+/* File input styling */
+
+.file-input-button {
+  background-color: #2d91f2; /* Your theme blue color */
+  color: #fff; /* White text color */
+  border: 2px solid #2d91f2; /* Border color to match the background */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  display: flex; /* Flexbox to align the text and icon */
+  align-items: center; /* Center alignment for items */
+  justify-content: center; /* Center the content */
+  gap: 10px; /* Space between the text and the icon */
+}
+
+.file-input-button:hover {
+  background-color: #1c4e80; /* A darker shade for hover */
+  border-color: #1c4e80; /* Border color to match the hover background */
+}
+
+/* Hide the file input visually but remain accessible */
+input[type='file'] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+/* Ouput Style*/
+
+.note-summary pre {
+  white-space: pre-wrap; /* Preserve line breaks and wrap long lines */
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  font-family: 'Arial', sans-serif; /* Use a monospaced font for code */
+}
+
+
+
+/* Center the spinner in its container */
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px; /* Adjust the height as needed */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db; /* Use your primary color here */
+  border-radius: 50%;
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  animation: spin 1s linear infinite; /* Adjust the speed as needed */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

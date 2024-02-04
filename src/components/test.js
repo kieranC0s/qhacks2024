@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
-import "pdfjs-dist/legacy/build/pdf.worker";
+import React, { useState, useEffect, useRef } from 'react';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../style.css';
+import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 function Test() {
   const [notes, setNotes] = useState("");
@@ -9,12 +10,26 @@ function Test() {
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
   const [summaryKey, setSummaryKey] = useState(false); // State to force re-render the summary component
+  const [answerStr,setAnswerStr] = useState("");
+  const [answerVisible,setAnswerVisible] =useState(false);
+  const [testMade,setTestMade] = useState(false);
+    
   //quantity values for multiple choice questions, long answer questions, short answer questions, definitions, calculations
   const [mcq, setMcq] = useState(0);
   const [laq, setLaq] = useState(0);
   const [saq, setSaq] = useState(0);
   const [def, setDef] = useState(0);
   const [calc, setCalc] = useState(0);
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(summary)
+      .then(() => {
+        alert('Summary copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy text to clipboard', err);
+      });
+    };
 
   
   const handleNumberChange = (operation, val) => {
@@ -69,13 +84,6 @@ function Test() {
 	setCalc(0);
 	 }
 
-   const handlePrint = () => {
-    const printWindow = window.open('', '_blank');
-    const printContents = document.querySelector('.note-summary').innerHTML;
-    printWindow.document.body.innerHTML = printContents;
-    printWindow.print();
-  };
-
   const handleNotesChange = (event) => {
     setNotes(event.target.value);
   };
@@ -83,6 +91,13 @@ function Test() {
   const handlePdfChange = (event) => {
     setPdfFile(event.target.files[0]);
   };
+
+  const fileInputRef = useRef();
+
+  const handleFileButtonClick = () => {
+  fileInputRef.current.click();
+  };
+
 
   const extractTextFromPdf = async (pdfData) => {
     const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
@@ -106,7 +121,7 @@ function Test() {
     const summarizeText = async (text) => {
         console.log(mcq, laq, saq, def, calc);
         const prompt = `Please create a quiz with ` + mcq + ` multiple choice question(s), `+ laq + ` long answer question(s), ` + saq + ` short answer question(s), ` + def + ` definition question(s), and `
-        + calc+ ` calculation question(s). It should be based on of the following information/word/topic:\n\n${text}`;
+        + calc+ ` calculation question(s). It should be based on of the following information/word/topic:\n\n${text}`+ `Make sure you list the answers after in the formatt:  ANSWER KEY: 1. A 2. B 3. C 4. B......, after the list of questions`;
         console.log(prompt);
       try {
         const response = await fetch(
@@ -116,7 +131,7 @@ function Test() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
@@ -126,8 +141,30 @@ function Test() {
         );
         const responseData = await response.json();
         if (response.ok) {
+            //split string to keep the message and the answer key separate
+
+       let
+       splitString = responseData.choices[0].message.content.split("ANSWER KEY:");
+       
+       
+       
+              //set the test to the message
+       
+              console.log("test",
+       splitString[0]);
+       
+              console.log("Answerkey",
+       splitString[1]);
+       
+       
+       
+              setSummary(splitString[0]);
+       
+              setAnswerStr(splitString[1]);
+       
           console.log(responseData.choices[0].message.content);
-          setSummary(responseData.choices[0].message.content);
+            setTestMade(true);
+
           setSummaryKey(!summaryKey);
         } else {
           console.error("Response not ok:", responseData);
@@ -182,29 +219,39 @@ function Test() {
     }; // Whenever the 'summary' state changes, update the displayed summary
   }, [summaryKey]);
 
-  
+  const revealAnswers = () => { setAnswerVisible(!answerVisible);}
 
   return (
-    <div id="mock-up-tests" className="App">  
-      <main className="App-main">               
-        <section
-          className="note-upload"
-          style={{ display: "flex", flexDirection: "column" }}
-        >
-          <h2>Generate Practice Tests Based Off Of Your Study Materials</h2>
+    <div id="mock-up-tests" className="notes-container">
+      <div className="notes-header">
+        <h1>Test Generation</h1>
+        <p>Customize the test parameters and generate practice tests based on your notes.</p>
+      </div>
+      <div className="notes-content">
+        <div className="notes-section">
+          <h2>Generate instant Practice Tests</h2>
           <textarea
+            className="notes-textarea"
             placeholder="Put your notes here. We'll do the rest."
             value={notes}
             onChange={handleNotesChange}
             disabled={isSubmitting}
           />
-          <input
-            type="file"
-            onChange={handlePdfChange}
-            accept=".pdf"
-            disabled={isSubmitting}
-          />
-          <h3>Test Formatting</h3>
+          <div className="file-input-container">
+        <button onClick={handleFileButtonClick} className="file-input-button">
+          Choose File <ArrowRightCircle size={15} />
+        </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handlePdfChange}
+          accept=".pdf"
+          style={{ display: 'none' }} // Hide the actual file input
+        />
+      </div>
+        </div>
+        <div className="test-formatting-section">
+          <h2>Test Formatting</h2>
           <p>
             <div style={{ float: "left", marginTop: 25 }}>
               Multiple Choice Questions
@@ -298,33 +345,38 @@ function Test() {
 			  <button onClick={() => handleNumberChange("+","calc")}>+</button>
 			</div>
 		  </p>
-		  
-		  <p>
 		  <button style={{maxWidth:"100px",margin:"0 auto", display: "block", backgroundColor: "#808080"}} onClick={handleReset}>Reset</button>
 		  <button onClick={handleSubmit} disabled={isSubmitting}>
-            {isSubmitting ? "Transforming..." : "Start Transforming"}
-      </button>
+            {isSubmitting ? 'Creating Test...' : 'Generate Test'}
+          </button>
+          <button onClick={copyToClipboard} disabled={!summary || isSubmitting}>
+            Copy to Clipboard
+          </button>
+          </div>
+        <div className="notes-summary">
+          <h3>Generated Test</h3>
+          {isSubmitting ? (
+            <div className="spinner-container">
+              <div className="spinner"></div>
+            </div> ) : (
+          <pre><textarea 
+            className="summary-textarea"
+            value={displayedSummary}
+            readOnly
+            placeholder="The generated test will appear here."
+          /></pre> )}
+          <pre><p>
+             <button onClick={revealAnswers} disabled={isSubmitting || !testMade}
+            className="testGen-button">
+                Reveal Answers
+                </button>
+                <p>
 
-      <button onClick={handlePrint} disabled={!summary||isSubmitting} className="print-button">
-            Print Summary
-      </button>
-		  </p>
-        </section>
-                
-        <aside className="note-options">
-                    {/* Your existing code for note options */}          
-        </aside>
-                
-
-        <section className="note-summary">
-                    <h3>Generated Test</h3>
-                    
-          <p>{displayedSummary || "Your summary will appear here."}</p>
-                  
-        </section>
-              
-      </main>
-          
+                </p> {answerVisible && (answerStr )|| "Your answer key will appear here."}
+                </p>
+            </pre>
+        </div>
+      </div>
     </div>
   );
 }

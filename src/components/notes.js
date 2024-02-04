@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
 import 'pdfjs-dist/legacy/build/pdf.worker';
 import '../style.css';
+import { ArrowRightCircle } from 'react-bootstrap-icons';
 
 function Notes() {
   const [notes, setNotes] = useState('');
@@ -9,6 +10,16 @@ function Notes() {
   const [pdfFile, setPdfFile] = useState(null); // State to store the selected PDF file
   const [isSubmitting, setIsSubmitting] = useState(false); // State to track whether the form is being submitted
   const [quantity, setQuantity] = useState(5);
+
+const copyToClipboard = () => {
+    navigator.clipboard.writeText(summary)
+      .then(() => {
+        alert('Summary copied to clipboard!');
+      })
+      .catch(err => {
+        console.error('Failed to copy text to clipboard', err);
+      });
+    };
 
   const handleNotesChange = (event) => {
     setNotes(event.target.value);
@@ -18,6 +29,8 @@ function Notes() {
     setPdfFile(event.target.files[0]);
   };
 
+
+      
   const extractTextFromPdf = async (pdfData) => {
     const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
     let allText = '';
@@ -29,7 +42,11 @@ function Notes() {
     return allText;
   };
 
+    const fileInputRef = useRef();
 
+    const handleFileButtonClick = () => {
+    fileInputRef.current.click();
+    };
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -42,7 +59,7 @@ function Notes() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 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', // Replace with your actual API key
+            'Authorization': 'Bearer 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', // Replace with your actual API key
           },
           body: JSON.stringify({
             model: "gpt-4",
@@ -111,13 +128,8 @@ function Notes() {
     setIsSubmitting(false);
     console.log('submitting', isSubmitting);
     }   
-      }, 30); // Adjust the interval duration as needed'
-
-        
+      }, 30); // Adjust the interval duration as needed' 
    };
-
-    
-
     // Whenever the 'summary' state changes, update the displayed summary
     if (summary) {
       setDisplayedSummary('');
@@ -126,12 +138,10 @@ function Notes() {
   }, [summary]);
 
 const handleNumberChange = (value) => {
-
 }
 
-
 return (
-    <div id = "notes-summary" className="notes-container">
+    <div id = "notes-summary" className="notes-summary">
       <div className="notes-header">
         <h1>Notes Summary</h1>
         <p>In this section you will find the necessary tools to simply summarize, and condense your notes.</p>
@@ -145,25 +155,38 @@ return (
             onChange={handleNotesChange}
             disabled={isSubmitting}
           />
-          <input
-            type="file"
-            onChange={handlePdfChange}
-            accept=".pdf"
-            disabled={isSubmitting}
-          />
+          <div className="file-input-container">
+        <button onClick={handleFileButtonClick} className="file-input-button">
+          Choose File <ArrowRightCircle size={15} />
+        </button>
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handlePdfChange}
+          accept=".pdf"
+          style={{ display: 'none' }} // Hide the actual file input
+        />
+      </div>
           <button onClick={handleSubmit} disabled={isSubmitting}>
             {isSubmitting ? 'Transforming...' : 'Start Transforming'}
+          </button>
+          <button onClick={copyToClipboard} disabled={!summary || isSubmitting}>
+            Copy to Clipboard
           </button>
         </div>
         <div className="notes-summary">
           <h3>Summary</h3>
+          {isSubmitting ? (
+            <div className="spinner-container">
+              <div className="spinner"></div>
+            </div> ) : (
           <textarea
           className="summary-textarea"
           value={summary}
           onChange={e => setSummary(e.target.value)}
           placeholder="The summarized content will be shown here."
           readOnly // Remove this line if you want the text to be editable
-        />
+        /> )}
         </div>
       </div>
     </div>
