@@ -111,7 +111,7 @@ function App() {
             headers: {
               "Content-Type": "application/json",
               Authorization:
-                "Bearer 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", // Replace with your actual API key
+                "Bearer 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", // Replace with your actual API key
             },
             body: JSON.stringify({
               model: "gpt-4",
@@ -158,6 +158,7 @@ function App() {
     }
   };
 
+
   const createTest = async () => {
     setIsSubmitting(true); // Function to handle summarization
     //check that question values are not 0
@@ -166,9 +167,42 @@ function App() {
       setTest("Please enter some questions to generate a test.");
     }else{
       setTest("Generating test...");
+      createTestQuestions();
     }
-    setTestKey(!testKey);
   };
+
+  //a function that makes another api call to create a test based on the number of each question type
+  const createTestQuestions = async () => {
+    try {
+      const response = await fetch(
+        "https://api.openai.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer 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", // Replace with your actual API key
+          },
+          body: JSON.stringify({
+            model: "gpt-4",
+            messages: [{ role: "user", content: "Create a test with " + mcq + " multiple choice questions, " + laq + " long answer questions, " + saq + " short answer questions, " + def + " definitions, and " + calc + " calculations. It should be based on this:" +summary}],
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (response.ok) {
+        console.log("Response data:", responseData.choices[0].message.content);
+        setTest(responseData.choices[0].message.content);
+        setTestKey(!testKey);
+      } else {
+        console.error("Response not ok:", responseData);
+        setTest("Failed to generate test.");
+      }
+    } catch (error) {
+      console.error("Error sending request to OpenAI API:", error);
+      setTest("An error occurred while generating the test.");
+    }
+  }
 
   const [displayedSummary, setDisplayedSummary] = useState("");
   const [displayedTest, setDisplayedTest] = useState("");
@@ -199,6 +233,7 @@ function App() {
   , [summaryKey]);
 
   useEffect(() => {
+    console.log("testKey", testKey);
     if (test) {
       //add first letter to displayed summary
       setDisplayedTest(test[0]);
