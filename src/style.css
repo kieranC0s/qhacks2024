@@ -1,0 +1,593 @@
+/************ Custom Font ************/
+@font-face {
+	font-family: Centra;
+	src: url('./assets/font/CentraNo2-Bold.ttf');
+	font-weight: 700;
+}
+@font-face {
+	font-family: Centra;
+	src: url('./assets/font/CentraNo2-Medium.ttf');
+	font-weight: 500;
+}
+@font-face {
+	font-family: Centra;
+	src: url('./assets/font/CentraNo2-Book.ttf');
+	font-weight: 400;
+}
+
+/* General resets */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+}
+
+
+/* Navbar Styling */
+.navbar {
+  background-color: transparent;
+  color: white;
+  justify-content: space-between; /* Keep items on the sides */
+  align-items: center; /* Center items vertically */
+  padding: 1rem 2rem; /* Adjusted padding for better spacing */
+  position: fixed;
+  width: 100%;
+  top: 0;
+  transition: background-color 0.3s;
+  z-index: 999;
+}
+
+.ms-auto {
+  justify-content: flex-end; /* Aligns the nav items to the right */
+  align-items: center; /* Aligns the nav items vertically */
+  height: 50%; /* Ensures the .ms-auto div takes the full height of the nav */
+  display: flex;
+  margin-left: 14px;
+  margin-top: -3.75rem;
+  
+}
+
+.logo {
+  border-radius: 50%; /* Makes the image round */
+  height: 85px; /* Adjust the size as needed */
+  width: 85px; /* Adjust the size as needed */
+  object-fit: cover; /* Ensures the image covers the area without stretching */
+  border: 2px solid white; /* Optional: Adds a border around the image */
+  margin-right: 1rem; /* Adds space between the logo and the nav links */
+}
+
+/* Styles for the brand */
+.navbar-brand {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center; /* This will vertically align the brand text with the buttons */
+  height: 20%; /* Matches the height of the nav links for alignment */
+  margin-right: 1rem; /* Adds space between the brand and the nav links */
+  margin-bottom: -2rem; /* Removes the default margin */
+}
+
+.navbar-scrolled {
+  background-color: rgba(51, 51, 51, 0.8);
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the color and opacity as needed */
+
+  padding: 2rem 2rem;
+  margin-top: -1.5rem;
+  size-adjust: auto;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  margin: 0 10px;
+  border: 2px solid white;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.nav-link:hover, .navbar-scrolled .nav-link:hover {
+  background: white;
+  color: #333;
+}
+
+.navbar-scrolled .nav-link {
+  border-color: #ffffff;
+}
+
+.navbar-collapse {
+  flex-basis: 100%;
+  flex-grow: 1;
+  align-items: center;
+}
+
+/* Assuming you have a button or something similar for 'iLearn' */
+.navbar-brand:hover,
+.navbar-brand:focus {
+  color: white; /* Maintain the white color on hover/focus */
+  text-decoration: none; /* No underline on hover/focus */
+}
+
+
+/************ Banner Css ************/
+.banner {
+  margin-top: 0;
+  padding: 260px 0 100px 0;
+  background-image: url('./assets/banner.png');
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+  width: relative;
+  height: 80vh;
+  overflow: hidden;
+}
+.banner .tagline {
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 8px 10px;
+  background: linear-gradient(90.21deg, rgba(170, 54, 124, 0.5) -5.91%, rgba(74, 47, 189, 0.5) 111.58%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.banner .wrap {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 65px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.banner h1 {
+  font-size: 65px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+}
+.banner p {
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+  margin-bottom: 20px;
+}
+.banner sub-heading {
+  color: #ffffff;
+  font-size: 20px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+}
+.banner button {
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 60px;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+}
+.banner button svg {
+  font-size: 25px;
+  margin-left: 10px;
+  transition: 0.3s ease-in-out;
+  line-height: 1;
+}
+.banner button:hover svg {
+  margin-left: 25px;
+}
+
+.text-background {
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the color and opacity as needed */
+  padding: 20px; /* Add padding to give some space around the text */
+  border-radius: 10px; /* Optional: if you want rounded corners */
+  width: 40%; /* Adjust the width as needed */
+  margin-left: 200px; /* Adjust the margin as needed */
+  align-content: center;
+  position: absolute;
+  top: 44%;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Optional: Add a shadow for depth */
+}
+
+.App-header {
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  padding: 20px;
+  border-radius: 10px; /* Rounded corners */
+  position: relative; /* Needed to position it relative to its normal position */
+  z-index: 50; /* Higher index so it's above the other content */
+  width: calc(100% - 40px); /* Full width minus the margin on both sides */
+  margin: 20px auto; /* Top and bottom margin with auto to center it horizontally */
+}
+
+.App-main {
+  position: relative; /* Needed for z-index to take effect */
+  z-index: 10; /* Lower index so it's below the header */
+  margin-top: -50px; /* Pull the main content up to overlap with the header */
+}
+
+.banner img {
+  animation: updown 3s linear infinite;
+}
+@keyframes updown {
+    0% {
+        transform: translateY(-20px);
+    }
+    50% {
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+.txt-rotate > .wrap {
+  border-right: 0.08em solid #666;
+}
+
+.banner img {
+  position: absolute;
+  margin-top: -300px; /* Adjust the margin as needed */
+  right: 10vw; /* 10% of the viewport width from the right */
+  transform: translate(-50%, -50%) scale(0.7); /* Adjust the scale if needed */
+  max-width: 30%; /* Limit the maximum width of the image */
+}
+
+/* Summary.css */
+.App {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  --blue-primary: #2d91f2; /* Define your primary blue color */
+  --blue-secondary: #1c4e80; /* Define a secondary/darker blue color */
+  --text-color: #fff;
+  --border-radius: 5px;
+}
+
+.App-header {
+  background-color: transparent;
+  padding: 20px;
+  text-align: center;
+  color: var(--text-color);
+}
+
+.App-header h1 {
+  font-weight: 300;
+  color: var(--text-color);
+  text-shadow: 1px 1px 2px #000;
+}
+
+.App-header p {
+  color: var(--text-color);
+  font-size: 14px;
+}
+
+.App-main {
+  padding: 20px;
+  background-color: #ddd; /* Adjust based on your theme */
+  backdrop-filter: blur(10px); /* Glassmorphism effect */
+  border-radius: var(--border-radius);
+}
+
+.note-upload h2,
+.note-summary h3 {
+  font-weight: 300;
+  color: var(--blue-primary);
+}
+
+.notes-summary {
+  background-color: #ddd; /* Light blue background for a softer look */
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px; /* Adds space below the component */
+  width: 100%;
+  height: 80%;
+  margin: 0 auto; /* Center the component */
+}
+
+/* Test component styles */
+
+textarea,
+input[type="file"] {
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: var(--border-radius);
+  transition: border-color 0.3s ease;
+}
+
+textarea:focus,
+input[type="file"]:hover {
+  border-color: var(--blue-primary);
+}
+
+button {
+  background: linear-gradient(45deg, var(--blue-primary), var(--blue-secondary));
+  color: var(--text-color);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: box-shadow 0.3s ease;
+}
+
+button:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: default;
+}
+
+/* Add an animation class for when the summary is loading */
+.loading-animation {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: var(--text-color);
+  animation: spin 1s ease-in-out infinite;
+}
+
+/* style.css */
+.notes-container {
+  background: #ffffff; /* Or any color that matches your theme */
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25); /* This creates the shadow around the container */
+  padding: 20px;
+  margin: 20px auto; /* Adjust the margin as needed */
+  max-width: 1200px; /* Adjust the width as needed */
+  overflow: hidden; /* Ensures the child elements don't overflow */
+}
+
+.notes-header {
+  margin-bottom: 30px; /* Adds more space below the header */
+}
+
+.notes-content {
+  display: flex;
+  flex-direction: column; /* Stack the children vertically */
+  gap: 20px; /* This adds space between the children */
+}
+
+.notes-input, .notes-summary {
+  background: linear-gradient(to right, #2d91f2, #1c4e80); /* Gradient background */
+  border-radius: 10px;
+  padding: 20px;
+  color: #ffffff; /* Adjust text color for readability */
+}
+
+textarea, input, button {
+  margin: 10px 0; /* Adds space around inputs and button */
+  padding: 10px;
+  border: 1px solid #ccc; /* A lighter border */
+  border-radius: 5px;
+}
+
+button {
+  background-color: #4CAF50; /* Adjust to match your theme */
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #45a049; /* A slightly darker shade for hover effect */
+}
+
+button:disabled {
+  background-color: #cccccc;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* Add more styles based on your specific needs */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.navbar, .banner, .notes-container {
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Shared styles for both Notes and Test components */
+
+.notes-section,
+.test-formatting-section,
+.notes-summary {
+  background: linear-gradient(to right, #2d91f2, #1c4e80);
+  border-radius: 10px;
+  padding: 20px;
+  color: #ffffff;
+  margin-bottom: 20px; /* Adds space between sections */
+}
+
+.notes-textarea,
+.file-input,
+.summary-textarea {
+  width: 100%;
+  height: 150px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 10px;
+  font-family: 'Arial', sans-serif;
+  font-size: 1em;
+}
+
+.file-input {
+  height: auto; /* Adjust height for file input */
+}
+
+
+/* Shared styles for Resources components */
+/* Apply the same styling to all input fields and buttons for consistency */
+.note-upload input[type="text"],
+.note-upload input[type="file"],
+.note-upload button {
+  width: 100%; /* This will make them take the full width of their container */
+  padding: 10px;
+  margin-bottom: 10px; /* Adds some space below the element */
+  border: 2px solid #2d91f2; /* Your theme color */
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding does not affect the width */
+}
+
+/* Override styles for the file input to make it visually similar to text inputs */
+.note-upload input[type="file"] {
+  cursor: pointer;
+  display: block; /* Align it with other block-level elements */
+  width: auto; /* Reset width to default to match text inputs or set a specific width as desired */
+  padding: 10px; /* Adjust padding to match text inputs */
+  text-overflow: ellipsis; /* Ensures long file names do not break the layout */
+}
+
+/* Footer Styling */
+
+/* style.css */
+
+.footer {
+  background: linear-gradient(to right, #2d91f2, #1c4e80); /* Use the gradient colors from your image */
+  color: #fff;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.social-media-icons a {
+  color: #fff;
+  margin: 0 10px;
+}
+
+.social-media-icons a:hover {
+  color: #ddd; /* Or any other hover effect color */
+}
+
+/* File input styling */
+
+.file-input-container {
+  display: flex; /* Use flexbox to align children side by side */
+  align-items: center; /* Center alignment for items */
+  justify-content: flex-start; /* Align items to the start of the container */
+}
+
+.file-input-button {
+  background-color: #2d91f2; /* Your theme blue color */
+  color: #fff; /* White text color */
+  border: 2px solid #2d91f2; /* Border color to match the background */
+  padding: 10px 20px; /* Padding for size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  display: flex; /* Flexbox to align the text and icon */
+  align-items: center; /* Center alignment for items */
+  justify-content: center; /* Center the content */
+  gap: 10px; /* Space between the text and the icon */
+  margin-right: 10px; /* Optional: Add some space to the right */
+  display: flex; /* Use flexbox to align children side by side */
+  align-items: center; /* Center alignment for items */
+  justify-content: flex-start; /* Align items to the start of the container */
+}
+
+.file-input-button:hover {
+  background-color: #1c4e80; /* A darker shade for hover */
+  border-color: #1c4e80; /* Border color to match the hover background */
+}
+
+/* Hide the file input visually but remain accessible */
+input[type='file'] {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+/* Ouput Style*/
+
+.note-summary pre {
+  white-space: pre-wrap; /* Preserve line breaks and wrap long lines */
+  word-wrap: break-word; /* Break long words to prevent overflow */
+  font-family: 'Arial', sans-serif; /* Use a monospaced font for code */
+}
+
+
+
+/* Center the spinner in its container */
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px; /* Adjust the height as needed */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #3498db; /* Use your primary color here */
+  border-radius: 50%;
+  width: 50px; /* Adjust the size as needed */
+  height: 50px; /* Adjust the size as needed */
+  animation: spin 1s linear infinite; /* Adjust the speed as needed */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+.question-container {
+  border: 1px solid #ccc;
+  background:  #9c9191;
+  border-radius: 10px;
+
+  width: 100%;
+  /* change text colour to b lack*/
+  color: black;
+
+  padding: 10px;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
